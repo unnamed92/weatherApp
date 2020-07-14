@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import WeatherWidget from "../components/WeatherWidget";
+import Slider from "../components/Slider";
 
 interface LocationI {
   lat: number;
@@ -61,11 +62,18 @@ const WeatherWidgetContainer = (): JSX.Element => {
     }
   }, [location, weather]);
 
+  const handleSliderChange = (value: number): void =>
+    setBackgroundColorNumber(value);
+
   return (
     <>
       <WeatherWidget
         weather={weather}
         backgroundColor={backgroundColorResolver(backgroundColorNumber)}
+      />
+      <Slider
+        value={backgroundColorNumber}
+        onChangeCallback={handleSliderChange}
       />
     </>
   );
