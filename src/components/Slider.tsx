@@ -2,7 +2,7 @@ import React from "react";
 
 interface SliderI {
   value?: number;
-  onChangeCallback: any;
+  onChangeCallback: (value: number) => void;
 }
 
 const Slider: React.FC<SliderI> = (props): JSX.Element => {
@@ -13,7 +13,7 @@ const Slider: React.FC<SliderI> = (props): JSX.Element => {
       min="-50"
       max="100"
       value={value}
-      onChange={(event) => onChangeCallback(event.target.value)}
+      onChange={(event) => onChangeCallback(Number(event.target.value))}
     />
   );
 };

@@ -10,7 +10,6 @@ interface LocationI {
 }
 
 export interface WeatherI {
-  temperature: number;
   description: string;
   iconId: number;
   wind: number;
@@ -19,7 +18,7 @@ export interface WeatherI {
 const WeatherWidgetContainer = (): JSX.Element => {
   const [location, setLocation] = useState<LocationI>();
   const [weather, setWeather] = useState<WeatherI>();
-  const [backgroundColorNumber, setBackgroundColorNumber] = useState<number>(0);
+  const [temperature, setTemperature] = useState<number>(0);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
       setLocation({
@@ -50,32 +49,28 @@ const WeatherWidgetContainer = (): JSX.Element => {
         )
         .then(({ data }) => {
           setWeather({
-            temperature: data.main.temp,
             description: data.weather.description,
             iconId: data.weather[0].icon,
             wind: data.wind.speed,
           });
-          setBackgroundColorNumber(data.main.temp);
+          setTemperature(data.main.temp);
         });
     } catch (err) {
       console.log("err", err);
     }
   }, [location, weather]);
 
-  const handleSliderChange = (value: number): void =>
-    setBackgroundColorNumber(value);
+  const handleSliderChange = (value: number): void => setTemperature(value);
 
   return (
-    <>
-      <WeatherWidget
-        weather={weather}
-        backgroundColor={backgroundColorResolver(backgroundColorNumber)}
-      />
-      <Slider
-        value={backgroundColorNumber}
-        onChangeCallback={handleSliderChange}
-      />
-    </>
+    <div
+      className="container"
+      style={{ backgroundColor: backgroundColorResolver(temperature) }}
+    >
+      <h1>Welcome to Weather App</h1>
+      <WeatherWidget weather={weather} temperature={temperature} />
+      <Slider value={temperature} onChangeCallback={handleSliderChange} />
+    </div>
   );
 };
 

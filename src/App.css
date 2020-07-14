@@ -4,12 +4,5 @@
   justify-content: center;
   flex-direction: column;
   height: 100vh;
-}
-.widget-container {
-  min-width: 300px;
-  min-height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  width: 100vw;
 }
